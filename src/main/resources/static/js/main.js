@@ -26,12 +26,10 @@ $( document ).ready(function() {
             //TODO: Frontend
             $('#signinButton').attr('style', 'display: none');
 
-            console.log(authResult['code'])
-
-            /*// Send the code to the server
+            // Send the code to the server
             $.ajax({
                 type: 'POST',
-                url: 'http://example.com/storeauthcode',
+                url: 'http://localhost:8080/storeauthcode',
                 // Always include an `X-Requested-With` header in every AJAX request,
                 // to protect against CSRF attacks.
                 headers: {
@@ -39,12 +37,14 @@ $( document ).ready(function() {
                 },
                 contentType: 'application/octet-stream; charset=utf-8',
                 success: function(result) {
-                    // Handle or verify the server response.
+                    //TODO: Error handling
+                    console.log(result)
                 },
                 processData: false,
                 data: authResult['code']
-            });*/
+            });
         } else {
+            //TODO: Error handling
             // There was an error.
         }
     }
