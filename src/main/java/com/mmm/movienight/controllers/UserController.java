@@ -6,9 +6,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.SQLOutput;
 
 @RestController
 public class UserController {
@@ -16,12 +15,17 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @PostMapping("/addnewuser")
     public ResponseEntity addNewUser( @RequestParam("username") String username, @RequestParam("password") String password) {
-        // TODO: encrypt password
-        Users user = new Users( ObjectId.get(),username,password );
-        // save user to db
+
+        //Generating random ObjectId and encrypting password
+        Users user = new Users(ObjectId.get(), username, passwordEncoder.encode(password));
+        //Save user to db
         userRepository.save(user);
+
         // TODO: status handling
         return ResponseEntity.ok( HttpStatus.OK );
     }
