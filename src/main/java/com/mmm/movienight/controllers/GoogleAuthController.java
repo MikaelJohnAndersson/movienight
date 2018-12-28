@@ -5,8 +5,16 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.mmm.movienight.models.UserGAPIDetails;
+import com.mmm.movienight.models.Users;
+import com.mmm.movienight.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.Principal;
 
 @RestController
 public class GoogleAuthController {
+
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping("/storeauthcode")
     public ResponseEntity storeAuthCode(@RequestBody String authcode, @RequestHeader("X-Requested-With") String xRequest) throws IOException{
@@ -45,9 +57,18 @@ public class GoogleAuthController {
                         REDIRECT_URI)
                         .execute();
 
-        String accessToken = tokenResponse.getAccessToken();
+        //Getting username from currently logged in user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
 
-        System.out.println("Access token: "  + accessToken);
+        //Getting token data and saving onto currently logged in user in db
+        Users user = userRepository.findByUsername(username);
+        String accessToken = tokenResponse.getAccessToken();
+        String refreshtoken = tokenResponse.getRefreshToken();
+        //TODO: Calculate time when token expires and save as DateTime instead?
+        Long expiresInSeconds = tokenResponse.getExpiresInSeconds();
+        user.setGapiDetails(new UserGAPIDetails(accessToken, refreshtoken, expiresInSeconds));
+        userRepository.save(user);
 
         //TODO: Return different status codes depending on Google server response
         return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
