@@ -10,11 +10,13 @@ public class Users {
 
     public String username;
     public String password;
+    public UserGAPIDetails gapiDetails;
 
-    public Users(ObjectId id, String username, String password) {
+    public Users(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.gapiDetails = gapiDetails;
     }
 
     public ObjectId getId() {
@@ -39,5 +41,13 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserGAPIDetails getGapiDetails() {
+        return gapiDetails;
+    }
+
+    public void setGapiDetails(UserGAPIDetails gapiDetails) {
+        this.gapiDetails = gapiDetails;
     }
 }

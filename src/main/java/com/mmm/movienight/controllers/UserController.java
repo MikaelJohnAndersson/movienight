@@ -22,7 +22,7 @@ public class UserController {
     public ResponseEntity addNewUser( @RequestParam("username") String username, @RequestParam("password") String password) {
 
         //Generating random ObjectId and encrypting password
-        Users user = new Users(ObjectId.get(), username, passwordEncoder.encode(password));
+        Users user = new Users(ObjectId.get(), username, passwordEncoder.encode(password), null);
         //Save user to db
         userRepository.save(user);
 
