@@ -11,4 +11,28 @@ public class UserGAPIDetails {
         this.refreshtoken = refreshtoken;
         this.expiresInSeconds = expiresInSeconds;
     }
+
+    public String getAccesstoken() {
+        return accesstoken;
+    }
+
+    public void setAccesstoken( String accesstoken ) {
+        this.accesstoken = accesstoken;
+    }
+
+    public String getRefreshtoken() {
+        return refreshtoken;
+    }
+
+    public void setRefreshtoken( String refreshtoken ) {
+        this.refreshtoken = refreshtoken;
+    }
+
+    public Long getExpiresInSeconds() {
+        return expiresInSeconds;
+    }
+
+    public void setExpiresInSeconds( Long expiresInSeconds ) {
+        this.expiresInSeconds = expiresInSeconds;
+    }
 }
