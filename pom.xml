@@ -56,6 +56,12 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-calendar</artifactId>
+			<version>v3-rev361-1.25.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
