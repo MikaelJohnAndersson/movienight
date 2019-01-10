@@ -1,4 +1,5 @@
 package com.mmm.movienight.services;
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -24,32 +25,20 @@ import java.util.List;
 public class GoogleService {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
-    private final DateTime minDate = new DateTime(new Date());
+    private final DateTime minDate = new DateTime( new Date() );
 
     public Events getEvents() {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-
-        //Getting token data and saving onto currently logged in user in db
-        Users user = userRepository.findByUsername(username);
+        Users user = userService.getActiveUser();
         String accessToken = user.getGapiDetails().getAccesstoken();
 
-        GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
-        Calendar calendar =
-                new Calendar.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
-                        .setApplicationName("MOVIE_NIGHT")
-                        .build();
+        GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
+        Calendar calendar = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE_NIGHT" ).build();
         Events events = null;
         try {
-            events = calendar.events().list("primary")
-                    .setMaxResults(50)
-                    .setTimeMin(minDate)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute();
+            events = calendar.events().list( "primary" ).setMaxResults( 50 ).setTimeMin( minDate ).setOrderBy( "startTime" ).setSingleEvents( true ).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
