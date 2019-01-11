@@ -14,8 +14,8 @@ public class MovieController {
     private String apikey = "9557cc1b";
 
     @GetMapping("/omdb/movies")
-    public ResponseEntity getMovie(@RequestParam("id") String movieid){
-        final String uri = "http://www.omdbapi.com/?apikey=" + apikey + "&i=" + movieid;
+    public ResponseEntity getMovie(@RequestParam("search") String search){
+        final String uri = "http://www.omdbapi.com/?apikey=" + apikey + "&t=" + search;
         RestTemplate restTemplate = new RestTemplate();
         Movie result = restTemplate.getForObject(uri, Movie.class);
         System.out.println(result);
