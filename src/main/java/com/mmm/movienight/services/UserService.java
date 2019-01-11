@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+    final UserRepository userRepository;
+
     @Autowired
-    UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public Users getActiveUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
