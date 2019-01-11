@@ -1,9 +1,13 @@
 package com.mmm.movienight.models;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
-public class Movie {
+public class Movies {
+
+    @Id
+    public ObjectId id;
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")
@@ -57,10 +61,10 @@ public class Movie {
     private
     Object[] ratings;
 
-    public Movie() {
+    public Movies() {
     }
 
-    public Movie(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
+    public Movies(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
         this.setTitle(title);
         this.setYear(year);
         this.setRated(rated);

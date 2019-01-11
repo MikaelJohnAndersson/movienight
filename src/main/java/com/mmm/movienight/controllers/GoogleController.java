@@ -7,32 +7,27 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.mmm.movienight.models.UserGAPIDetails;
 import com.mmm.movienight.models.Users;
-import com.mmm.movienight.repositories.UserRepository;
+import com.mmm.movienight.services.GoogleService;
 import com.mmm.movienight.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.Principal;
 
 @RestController
-public class GoogleAuthController {
+public class GoogleController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/storeauthcode")
+    @Autowired
+    GoogleService googleService;
+
+    @PostMapping("/google/auth")
     public ResponseEntity storeAuthCode( @RequestBody String authcode, @RequestHeader("X-Requested-With") String xRequest ) throws IOException {
 
         if (xRequest == null) {
@@ -61,4 +56,17 @@ public class GoogleAuthController {
         //TODO: Return different status codes depending on Google server response
         return ResponseEntity.ok( "HttpStatus:" + HttpStatus.OK );
     }
+
+    @GetMapping("/google/getevents")
+    public ResponseEntity getEvents(@RequestParam(value = "calendarId", required = false, defaultValue = "primary") String calendarId){
+
+        Users user = userService.getActiveUser();
+        String accessToken = user.getGapiDetails().getAccesstoken();
+
+        System.out.println(googleService.getEvents(calendarId, accessToken));
+
+        //TODO: Return different status codes depending on Google server response
+        return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
+    }
+
 }
