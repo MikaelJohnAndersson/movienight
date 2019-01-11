@@ -15,8 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableConfigurationProperties
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final MongoUserDetailsService userDetailsService;
+
     @Autowired
-    MongoUserDetailsService userDetailsService;
+    public SecurityConfiguration(MongoUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

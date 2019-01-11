@@ -12,12 +12,15 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class MovieController {
-
-    @Autowired
-    MovieRepository movieRepository;
-
     //TODO MOVE THIS TO A SAFE LOCATION 👀
     private String apikey = "9557cc1b";
+
+    private final MovieRepository movieRepository;
+
+    @Autowired
+    public MovieController(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
     @GetMapping("/omdb/movies")
     public ResponseEntity getMovie(@RequestParam("search") String search){
