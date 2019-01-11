@@ -12,7 +12,6 @@ public class Movie {
 
     @Id
     public ObjectId id;
-
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")
