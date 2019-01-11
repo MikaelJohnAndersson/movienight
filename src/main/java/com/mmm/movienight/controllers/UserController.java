@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    final UserRepository userRepository;
-
-    final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {

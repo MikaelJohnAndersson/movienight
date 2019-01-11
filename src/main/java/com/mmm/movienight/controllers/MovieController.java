@@ -15,7 +15,7 @@ public class MovieController {
     //TODO MOVE THIS TO A SAFE LOCATION 👀
     private String apikey = "9557cc1b";
 
-    final MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     @Autowired
     public MovieController(MovieRepository movieRepository) {
