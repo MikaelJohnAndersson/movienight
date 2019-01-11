@@ -21,17 +21,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                //TODO: Research CSRF. Disable a security risk?
+                .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/newuser").permitAll()
+                    .antMatchers("/newuser","/user/new").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     //For custom login page
                     .loginPage("/login")
                     .permitAll()
-                    .defaultSuccessUrl("/", true)
-                .and()
-                    .httpBasic();
+                    .defaultSuccessUrl("/", true);
     }
 
     @Bean
