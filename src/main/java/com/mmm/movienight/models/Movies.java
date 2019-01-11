@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Transient;
 public class Movies {
 
     @Id
-    public ObjectId id;
+    private ObjectId id;
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")

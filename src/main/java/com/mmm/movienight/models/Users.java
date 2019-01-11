@@ -6,11 +6,11 @@ import org.springframework.data.annotation.Id;
 public class Users {
 
     @Id
-    public ObjectId id;
+    private ObjectId id;
 
-    public String username;
-    public String password;
-    public UserGAPIDetails gapiDetails;
+    private String username;
+    private String password;
+    private UserGAPIDetails gapiDetails;
 
     public Users(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
         this.id = id;
