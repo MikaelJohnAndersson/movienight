@@ -14,8 +14,12 @@ import java.util.List;
 
 @Component
 public class MongoUserDetailsService implements UserDetailsService {
+<<<<<<< HEAD
 
     private final UserRepository repository;
+=======
+    final UserRepository repository;
+>>>>>>> Encapsulated class fields where possible
 
     @Autowired
     public MongoUserDetailsService(UserRepository repository) {
