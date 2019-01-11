@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableConfigurationProperties
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    final MongoUserDetailsService userDetailsService;
+    private final MongoUserDetailsService userDetailsService;
 
     @Autowired
     public SecurityConfiguration(MongoUserDetailsService userDetailsService) {

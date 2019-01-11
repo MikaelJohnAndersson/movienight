@@ -14,7 +14,8 @@ import java.util.List;
 
 @Component
 public class MongoUserDetailsService implements UserDetailsService {
-    final UserRepository repository;
+
+    private final UserRepository repository;
 
     @Autowired
     public MongoUserDetailsService(UserRepository repository) {

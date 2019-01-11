@@ -21,9 +21,8 @@ import java.io.IOException;
 @RestController
 public class GoogleController {
 
-    final UserService userService;
-
-    final GoogleService googleService;
+    private final UserService userService;
+    private final GoogleService googleService;
 
     @Autowired
     public GoogleController(UserService userService, GoogleService googleService) {
