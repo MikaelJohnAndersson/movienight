@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @PostMapping("/addnewuser")
+    @PostMapping("/user/new")
     public ResponseEntity addNewUser( @RequestParam("username") String username, @RequestParam("password") String password) {
 
         //Generating random ObjectId and encrypting password

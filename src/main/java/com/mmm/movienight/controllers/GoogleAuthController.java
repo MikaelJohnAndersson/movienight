@@ -32,7 +32,7 @@ public class GoogleAuthController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/storeauthcode")
+    @PostMapping("/google/auth")
     public ResponseEntity storeAuthCode( @RequestBody String authcode, @RequestHeader("X-Requested-With") String xRequest ) throws IOException {
 
         if (xRequest == null) {

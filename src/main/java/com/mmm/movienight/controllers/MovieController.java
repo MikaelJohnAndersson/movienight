@@ -13,7 +13,7 @@ public class MovieController {
     //TODO MOVE THIS TO A SAFE LOCATION 👀
     private String apikey = "9557cc1b";
 
-    @GetMapping("/getMovie")
+    @GetMapping("/omdb/movies")
     public ResponseEntity getMovie(@RequestParam("id") String movieid){
         final String uri = "http://www.omdbapi.com/?apikey=" + apikey + "&i=" + movieid;
         RestTemplate restTemplate = new RestTemplate();
