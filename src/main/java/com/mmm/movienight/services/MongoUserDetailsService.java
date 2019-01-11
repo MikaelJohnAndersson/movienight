@@ -14,8 +14,12 @@ import java.util.List;
 
 @Component
 public class MongoUserDetailsService implements UserDetailsService {
+    final UserRepository repository;
+
     @Autowired
-    private UserRepository repository;
+    public MongoUserDetailsService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
