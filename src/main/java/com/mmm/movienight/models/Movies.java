@@ -1,8 +1,14 @@
 package com.mmm.movienight.models;
 
-import org.springframework.data.annotation.Transient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
-public class Movie {
+public class Movies {
+
+    @Id
+    public ObjectId id;
+
     private String title;
     private String year;
     private String rated;
@@ -27,14 +33,13 @@ public class Movie {
     private String production;
     private String website;
     private String response;
-    @Transient
-    private
-    Object[] ratings;
+    @JsonIgnore
+    private Object[] ratings;
 
-    public Movie() {
+    public Movies() {
     }
 
-    public Movie(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
+    public Movies(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
         this.setTitle(title);
         this.setYear(year);
         this.setRated(rated);
