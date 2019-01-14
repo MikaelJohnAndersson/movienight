@@ -39,7 +39,7 @@ public class GoogleService {
         return events;
     }
 
-    public GoogleCredential getRefreshedCredentials(String refreshCode) throws IOException {
+    private GoogleCredential getRefreshedCredentials(String refreshCode) throws IOException {
 
         //Loading client credentials
         String CLIENT_SECRET_FILE = ResourceUtils.getFile( "classpath:client_secret_210833549992-v1apmfej0r5na34nb3nfah0h3c99sgk4.apps.googleusercontent.com.json" ).toString();
