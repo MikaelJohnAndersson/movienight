@@ -7,7 +7,7 @@ public class UserGAPIDetails {
     public String expiresAt;
 
 
-    public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresAt) {
+    public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresInSeconds) {
         this.accesstoken = accesstoken;
         this.refreshtoken = refreshtoken;
         this.expiresAt = expiresAt;
