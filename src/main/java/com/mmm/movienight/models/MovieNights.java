@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
-import java.util.ArrayList;
 import java.util.List;
-
 public class MovieNights {
 
     //Inner class needs to be static for Spring to serialize
@@ -69,6 +67,7 @@ public class MovieNights {
     }
 
     public void setSuggestedMovies(Movie[] suggestedMovies) {
+
         this.suggestedMovies = suggestedMovies;
     }
 
