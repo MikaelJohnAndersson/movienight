@@ -4,9 +4,9 @@ public class UserGAPIDetails {
 
     public String accesstoken;
     public String refreshtoken;
-    public Long expiresInSeconds;
+    public String expiresInSeconds;
 
-    public UserGAPIDetails(String accesstoken, String refreshtoken, Long expiresInSeconds) {
+    public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresInSeconds) {
         this.accesstoken = accesstoken;
         this.refreshtoken = refreshtoken;
         this.expiresInSeconds = expiresInSeconds;
@@ -28,11 +28,11 @@ public class UserGAPIDetails {
         this.refreshtoken = refreshtoken;
     }
 
-    public Long getExpiresInSeconds() {
+    public String getExpiresInSeconds() {
         return expiresInSeconds;
     }
 
-    public void setExpiresInSeconds( Long expiresInSeconds ) {
+    public void setExpiresInSeconds(String expiresInSeconds ) {
         this.expiresInSeconds = expiresInSeconds;
     }
 }

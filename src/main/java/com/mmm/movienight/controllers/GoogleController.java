@@ -5,6 +5,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.mmm.movienight.models.UserGAPIDetails;
 import com.mmm.movienight.models.User;
 import com.mmm.movienight.services.GoogleService;
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @RestController
 public class GoogleController {
@@ -47,10 +52,11 @@ public class GoogleController {
         //Getting token data and saving onto currently logged in user in db
         User user = userService.getActiveUser();
         String accessToken = tokenResponse.getAccessToken();
-        String refreshtoken = tokenResponse.getRefreshToken();
-        //TODO: Calculate time when token expires and save as DateTime instead?
+        String refreshToken = tokenResponse.getRefreshToken();
         Long expiresInSeconds = tokenResponse.getExpiresInSeconds();
-        user.setGapiDetails( new UserGAPIDetails( accessToken, refreshtoken, expiresInSeconds ) );
+        String expiresAt = LocalDateTime.now().plusSeconds(expiresInSeconds).toString();
+
+        user.setGapiDetails( new UserGAPIDetails( accessToken, refreshToken, expiresAt ) );
         userService.saveUser( user );
 
         //TODO: Return different status codes depending on Google server response
