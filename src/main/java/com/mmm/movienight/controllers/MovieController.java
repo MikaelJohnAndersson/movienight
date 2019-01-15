@@ -46,7 +46,7 @@ public class MovieController {
     public ResponseEntity getMovieSearch(@RequestParam("search") String search){
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&s=" + search;
         RestTemplate restTemplate = new RestTemplate();
-        Movies.MovieSearch result = restTemplate.getForObject(uri, Movies.MovieSearch.class);
+        Movie.MovieSearch result = restTemplate.getForObject(uri, Movie.MovieSearch.class);
 
         //TODO: Return different status codes depending on Google server response
         return new ResponseEntity(result, HttpStatus.OK);

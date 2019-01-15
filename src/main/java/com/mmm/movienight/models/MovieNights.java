@@ -25,7 +25,7 @@ public class MovieNights {
     @JsonProperty("members")
     private String[] members;
     @JsonProperty("movies")
-    private Movies[] suggestedMovies;
+    private Movie[] suggestedMovies;
     @JsonProperty("end")
     private String endTime;
 
@@ -61,11 +61,11 @@ public class MovieNights {
         this.members = members;
     }
 
-    public Movies[] getSuggestedMovies() {
+    public Movie[] getSuggestedMovies() {
         return suggestedMovies;
     }
 
-    public void setSuggestedMovies(Movies[] suggestedMovies) {
+    public void setSuggestedMovies(Movie[] suggestedMovies) {
         this.suggestedMovies = suggestedMovies;
     }
 
