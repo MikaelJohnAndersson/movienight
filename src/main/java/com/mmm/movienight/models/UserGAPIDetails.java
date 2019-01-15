@@ -2,14 +2,14 @@ package com.mmm.movienight.models;
 
 public class UserGAPIDetails {
 
-    private String accesstoken;
-    private String refreshtoken;
-    private Long expiresInSeconds;
+    public String accesstoken;
+    public String refreshtoken;
+    public String expiresAt;
 
-    public UserGAPIDetails(String accesstoken, String refreshtoken, Long expiresInSeconds) {
+    public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresAt) {
         this.accesstoken = accesstoken;
         this.refreshtoken = refreshtoken;
-        this.expiresInSeconds = expiresInSeconds;
+        this.expiresAt = expiresAt;
     }
 
     public String getAccesstoken() {
@@ -28,11 +28,11 @@ public class UserGAPIDetails {
         this.refreshtoken = refreshtoken;
     }
 
-    public Long getExpiresInSeconds() {
-        return expiresInSeconds;
+    public String getExpiresAt() {
+        return expiresAt;
     }
 
-    public void setExpiresInSeconds( Long expiresInSeconds ) {
-        this.expiresInSeconds = expiresInSeconds;
+    public void setExpiresAt(String expiresAt) {
+        this.expiresAt = expiresAt;
     }
 }
