@@ -4,12 +4,12 @@ public class UserGAPIDetails {
 
     public String accesstoken;
     public String refreshtoken;
-    public String expiresInSeconds;
+    public String expiresAt;
 
-    public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresInSeconds) {
+    public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresAt) {
         this.accesstoken = accesstoken;
         this.refreshtoken = refreshtoken;
-        this.expiresInSeconds = expiresInSeconds;
+        this.expiresAt = expiresAt;
     }
 
     public String getAccesstoken() {
@@ -28,11 +28,11 @@ public class UserGAPIDetails {
         this.refreshtoken = refreshtoken;
     }
 
-    public String getExpiresInSeconds() {
-        return expiresInSeconds;
+    public String getExpiresAt() {
+        return expiresAt;
     }
 
-    public void setExpiresInSeconds(String expiresInSeconds ) {
-        this.expiresInSeconds = expiresInSeconds;
+    public void setExpiresAt(String expiresAt) {
+        this.expiresAt = expiresAt;
     }
 }

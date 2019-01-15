@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "users")
 public class User {
 
@@ -19,6 +21,12 @@ public class User {
         this.username = username;
         this.password = password;
         this.gapiDetails = gapiDetails;
+    }
+
+    public boolean tokenIsExpired(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime accessTokenExpire = LocalDateTime.parse(this.gapiDetails.expiresAt);
+        return accessTokenExpire.isBefore(now);
     }
 
     public ObjectId getId() {
