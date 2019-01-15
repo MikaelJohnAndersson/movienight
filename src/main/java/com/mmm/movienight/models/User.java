@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    public ObjectId id;
+    private ObjectId id;
 
-    public String username;
-    public String password;
-    public UserGAPIDetails gapiDetails;
+    private String username;
+    private String password;
+    private UserGAPIDetails gapiDetails;
 
     public User(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
         this.id = id;

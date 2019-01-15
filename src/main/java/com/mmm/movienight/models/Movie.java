@@ -4,36 +4,65 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection = "users")
 public class Movie {
 
-    @Id
-    public ObjectId id;
+    public static class MovieSearch {
+        @JsonProperty("Search")
+        private Movie[] searchResult;
+    }
 
+    @Id
+    private ObjectId id;
+    @JsonProperty("Title")
     private String title;
+    @JsonProperty("Year")
     private String year;
+    @JsonProperty("Rated")
     private String rated;
+    @JsonProperty("Released")
     private String released;
+    @JsonProperty("Runtime")
     private String runtime;
+    @JsonProperty("Genre")
     private String genre;
+    @JsonProperty("Director")
     private String director;
+    @JsonProperty("Writer")
     private String writer;
+    @JsonProperty("Actors")
     private String actors;
+    @JsonProperty("Plot")
     private String plot;
+    @JsonProperty("Language")
     private String language;
+    @JsonProperty("Country")
     private String country;
+    @JsonProperty("Awards")
     private String awards;
+    @JsonProperty("Poster")
     private String poster;
+    @JsonProperty("Metascore")
     private String metascore;
+    @JsonProperty("imdbRating")
     private String imdbRating;
+    @JsonProperty("imdbVotes")
     private String imdbVotes;
+    @JsonProperty("imdbID")
     private String imdbID;
+    @JsonProperty("Type")
     private String type;
+    @JsonProperty("DVD")
     private String dvd;
+    @JsonProperty("BoxOffice")
     private String boxOffice;
+    @JsonProperty("Production")
     private String production;
+    @JsonProperty("Website")
     private String website;
+    @JsonProperty("Response")
     private String response;
     @JsonIgnore
     private Object[] ratings;
@@ -41,34 +70,34 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
-        this.setTitle(title);
-        this.setYear(year);
-        this.setRated(rated);
-        this.setReleased(released);
-        this.setRuntime(runtime);
-        this.setGenre(genre);
-        this.setDirector(director);
-        this.setWriter(writer);
-        this.setActors(actors);
-        this.setPlot(plot);
-        this.setLanguage(language);
-        this.setCountry(country);
-        this.setAwards(awards);
-        this.setPoster(poster);
-        this.setMetascore(metascore);
-        this.setImdbRating(imdbRating);
-        this.setImdbVotes(imdbVotes);
-        this.setImdbID(imdbID);
-        this.setType(type);
-        this.setDvd(dvd);
-        this.setBoxOffice(boxOffice);
-        this.setProduction(production);
-        this.setWebsite(website);
-        this.setResponse(response);
-        this.setRatings(ratings);
+    public Movie(ObjectId id, String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.rated = rated;
+        this.released = released;
+        this.runtime = runtime;
+        this.genre = genre;
+        this.director = director;
+        this.writer = writer;
+        this.actors = actors;
+        this.plot = plot;
+        this.language = language;
+        this.country = country;
+        this.awards = awards;
+        this.poster = poster;
+        this.metascore = metascore;
+        this.imdbRating = imdbRating;
+        this.imdbVotes = imdbVotes;
+        this.imdbID = imdbID;
+        this.type = type;
+        this.dvd = dvd;
+        this.boxOffice = boxOffice;
+        this.production = production;
+        this.website = website;
+        this.response = response;
+        this.ratings = ratings;
     }
-
 
     public String getTitle() {
         return title;

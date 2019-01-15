@@ -23,11 +23,14 @@ import java.time.LocalDateTime;
 @RestController
 public class GoogleController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+    private final GoogleService googleService;
 
     @Autowired
-    GoogleService googleService;
+    public GoogleController(UserService userService, GoogleService googleService) {
+        this.userService = userService;
+        this.googleService = googleService;
+    }
 
     @PostMapping("/google/auth")
     public ResponseEntity storeAuthCode( @RequestBody String authcode, @RequestHeader("X-Requested-With") String xRequest ) throws IOException {
