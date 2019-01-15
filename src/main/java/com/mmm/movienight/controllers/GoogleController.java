@@ -6,7 +6,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.mmm.movienight.models.UserGAPIDetails;
 import com.mmm.movienight.models.User;
 import com.mmm.movienight.services.GoogleService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
-
 
 @RestController
 public class GoogleController {
@@ -79,7 +77,6 @@ public class GoogleController {
             user.getGapiDetails().setExpiresAt(expiresAt);
             userService.saveUser(user);
         }
-
         String accessToken = user.getGapiDetails().getAccesstoken();
 
         System.out.println(googleService.getEvents(calendarId, accessToken));
