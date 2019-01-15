@@ -10,8 +10,13 @@ import org.springframework.data.annotation.Transient;
 @Document(collection = "users")
 public class Movie {
 
+    public static class MovieSearch {
+        @JsonProperty("Search")
+        private Movie[] searchResult;
+    }
+
     @Id
-    public ObjectId id;
+    private ObjectId id;
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")
@@ -66,34 +71,34 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
-        this.setTitle(title);
-        this.setYear(year);
-        this.setRated(rated);
-        this.setReleased(released);
-        this.setRuntime(runtime);
-        this.setGenre(genre);
-        this.setDirector(director);
-        this.setWriter(writer);
-        this.setActors(actors);
-        this.setPlot(plot);
-        this.setLanguage(language);
-        this.setCountry(country);
-        this.setAwards(awards);
-        this.setPoster(poster);
-        this.setMetascore(metascore);
-        this.setImdbRating(imdbRating);
-        this.setImdbVotes(imdbVotes);
-        this.setImdbID(imdbID);
-        this.setType(type);
-        this.setDvd(dvd);
-        this.setBoxOffice(boxOffice);
-        this.setProduction(production);
-        this.setWebsite(website);
-        this.setResponse(response);
-        this.setRatings(ratings);
+    public Movie(ObjectId id, String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.rated = rated;
+        this.released = released;
+        this.runtime = runtime;
+        this.genre = genre;
+        this.director = director;
+        this.writer = writer;
+        this.actors = actors;
+        this.plot = plot;
+        this.language = language;
+        this.country = country;
+        this.awards = awards;
+        this.poster = poster;
+        this.metascore = metascore;
+        this.imdbRating = imdbRating;
+        this.imdbVotes = imdbVotes;
+        this.imdbID = imdbID;
+        this.type = type;
+        this.dvd = dvd;
+        this.boxOffice = boxOffice;
+        this.production = production;
+        this.website = website;
+        this.response = response;
+        this.ratings = ratings;
     }
-
 
     public String getTitle() {
         return title;

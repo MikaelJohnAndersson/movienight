@@ -26,7 +26,6 @@ public class GoogleController {
     private final UserService userService;
     private final GoogleService googleService;
 
-
     @Autowired
     public GoogleController(UserService userService, GoogleService googleService) {
         this.userService = userService;
