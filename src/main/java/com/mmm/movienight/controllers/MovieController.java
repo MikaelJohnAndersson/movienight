@@ -59,5 +59,4 @@ public class MovieController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-
 }
