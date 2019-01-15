@@ -35,10 +35,11 @@ public class MovieController {
 
         if(result != null) {
             movieRepository.save(result);
+            return new ResponseEntity(result, HttpStatus.OK);
         }
 
         //TODO: Return different status codes depending on Google server response
-        return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/omdb/movies")

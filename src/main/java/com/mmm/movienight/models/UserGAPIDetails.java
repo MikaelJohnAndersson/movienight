@@ -6,6 +6,7 @@ public class UserGAPIDetails {
     public String refreshtoken;
     public String expiresAt;
 
+
     public UserGAPIDetails(String accesstoken, String refreshtoken, String expiresAt) {
         this.accesstoken = accesstoken;
         this.refreshtoken = refreshtoken;
