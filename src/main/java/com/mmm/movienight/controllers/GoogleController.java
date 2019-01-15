@@ -68,6 +68,7 @@ public class GoogleController {
 
         User user = userService.getActiveUser();
 
+        //TODO: FIX CODE DUPLICATION!!!!
         if(user.tokenIsExpired()){
             GoogleCredential userCredentials = googleService.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
             String newToken = userCredentials.getAccessToken();
@@ -80,6 +81,29 @@ public class GoogleController {
         String accessToken = user.getGapiDetails().getAccesstoken();
 
         System.out.println(googleService.getEvents(calendarId, accessToken));
+
+        //TODO: Return different status codes depending on Google server response
+        return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
+    }
+
+    @PostMapping("/google/getevents")
+    public ResponseEntity getEventsForUsers(@RequestBody String[] usernames) throws IOException{
+
+        for (String username : usernames) {
+            User user = userService.findByUserName(username);
+            //TODO: FIX CODE DUPLICATION!!!!
+            if(user.tokenIsExpired()){
+                GoogleCredential userCredentials = googleService.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
+                String newToken = userCredentials.getAccessToken();
+                Long expiresInSeconds = userCredentials.getExpiresInSeconds();
+                String expiresAt = LocalDateTime.now().plusSeconds(expiresInSeconds).toString();
+                user.getGapiDetails().setAccesstoken(newToken);
+                user.getGapiDetails().setExpiresAt(expiresAt);
+                userService.saveUser(user);
+            }
+            String accessToken = user.getGapiDetails().getAccesstoken();
+            System.out.println(googleService.getEvents("primary", accessToken));
+        }
 
         //TODO: Return different status codes depending on Google server response
         return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
