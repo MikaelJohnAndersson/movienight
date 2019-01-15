@@ -1,6 +1,6 @@
 package com.mmm.movienight.services;
 
-import com.mmm.movienight.models.Users;
+import com.mmm.movienight.models.User;
 import com.mmm.movienight.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,13 +14,13 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public Users getActiveUser() {
+    public User getActiveUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         return userRepository.findByUsername( username );
     }
 
-    public void saveUser( Users user ) {
+    public void saveUser( User user ) {
         userRepository.save( user );
     }
 

@@ -2,8 +2,10 @@ package com.mmm.movienight.models;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Users {
+@Document(collection = "users")
+public class User {
 
     @Id
     public ObjectId id;
@@ -12,7 +14,7 @@ public class Users {
     public String password;
     public UserGAPIDetails gapiDetails;
 
-    public Users(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
+    public User(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
         this.id = id;
         this.username = username;
         this.password = password;

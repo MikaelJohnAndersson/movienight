@@ -1,6 +1,6 @@
 package com.mmm.movienight.controllers;
 
-import com.mmm.movienight.models.Users;
+import com.mmm.movienight.models.User;
 import com.mmm.movienight.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserController {
     public ResponseEntity addNewUser( @RequestParam("username") String username, @RequestParam("password") String password) {
 
         //Generating random ObjectId and encrypting password
-        Users user = new Users(ObjectId.get(), username, passwordEncoder.encode(password), null);
+        User user = new User(ObjectId.get(), username, passwordEncoder.encode(password), null);
         //Save user to db
         userRepository.save(user);
 

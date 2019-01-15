@@ -6,7 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.mmm.movienight.models.UserGAPIDetails;
-import com.mmm.movienight.models.Users;
+import com.mmm.movienight.models.User;
 import com.mmm.movienight.services.GoogleService;
 import com.mmm.movienight.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class GoogleController {
         GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), "https://www.googleapis.com/oauth2/v4/token", clientSecrets.getDetails().getClientId(), clientSecrets.getDetails().getClientSecret(), authcode, REDIRECT_URI ).execute();
 
         //Getting token data and saving onto currently logged in user in db
-        Users user = userService.getActiveUser();
+        User user = userService.getActiveUser();
         String accessToken = tokenResponse.getAccessToken();
         String refreshtoken = tokenResponse.getRefreshToken();
         //TODO: Calculate time when token expires and save as DateTime instead?
@@ -60,7 +60,7 @@ public class GoogleController {
     @GetMapping("/google/getevents")
     public ResponseEntity getEvents(@RequestParam(value = "calendarId", required = false, defaultValue = "primary") String calendarId){
 
-        Users user = userService.getActiveUser();
+        User user = userService.getActiveUser();
         String accessToken = user.getGapiDetails().getAccesstoken();
 
         System.out.println(googleService.getEvents(calendarId, accessToken));

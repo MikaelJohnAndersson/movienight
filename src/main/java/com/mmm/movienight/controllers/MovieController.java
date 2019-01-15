@@ -1,6 +1,6 @@
 package com.mmm.movienight.controllers;
 
-import com.mmm.movienight.models.Movies;
+import com.mmm.movienight.models.Movie;
 import com.mmm.movienight.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class MovieController {
     public ResponseEntity getMovie(@RequestParam("search") String search){
         final String uri = "http://www.omdbapi.com/?apikey=" + apikey + "&t=" + search;
         RestTemplate restTemplate = new RestTemplate();
-        Movies result = restTemplate.getForObject(uri, Movies.class);
+        Movie result = restTemplate.getForObject(uri, Movie.class);
 
         if(result != null) {
             movieRepository.save(result);
