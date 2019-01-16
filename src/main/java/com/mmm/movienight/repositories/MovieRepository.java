@@ -1,8 +1,8 @@
 package com.mmm.movienight.repositories;
 
-import com.mmm.movienight.models.Movies;
+import com.mmm.movienight.models.Movie;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface MovieRepository extends MongoRepository<Movies, String> {
-    Movies findByTitleIgnoreCase(String title);
+public interface MovieRepository extends MongoRepository<Movie, String> {
+    Movie findByTitleIgnoreCase(String title);
 }

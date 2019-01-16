@@ -2,13 +2,15 @@ package com.mmm.movienight.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Transient;
 
-public class Movies {
+@Document(collection = "users")
+public class Movie {
 
     public static class MovieSearch {
         @JsonProperty("Search")
-        private Movies[] searchResult;
+        private Movie[] searchResult;
     }
 
     @Id
@@ -66,10 +68,10 @@ public class Movies {
     private
     Object[] ratings;
 
-    public Movies() {
+    public Movie() {
     }
 
-    public Movies(ObjectId id, String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
+    public Movie(ObjectId id, String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String language, String country, String awards, String poster, String metascore, String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice, String production, String website, String response, Object[] ratings) {
         this.id = id;
         this.title = title;
         this.year = year;

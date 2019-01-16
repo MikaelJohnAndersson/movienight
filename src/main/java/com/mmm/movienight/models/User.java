@@ -2,8 +2,12 @@ package com.mmm.movienight.models;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Users {
+import java.time.LocalDateTime;
+
+@Document(collection = "users")
+public class User {
 
     @Id
     private ObjectId id;
@@ -12,11 +16,17 @@ public class Users {
     private String password;
     private UserGAPIDetails gapiDetails;
 
-    public Users(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
+    public User(ObjectId id, String username, String password, UserGAPIDetails gapiDetails) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.gapiDetails = gapiDetails;
+    }
+
+    public boolean tokenIsExpired(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime accessTokenExpire = LocalDateTime.parse(this.gapiDetails.expiresAt);
+        return accessTokenExpire.isBefore(now);
     }
 
     public ObjectId getId() {

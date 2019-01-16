@@ -1,6 +1,6 @@
 package com.mmm.movienight.controllers;
 
-import com.mmm.movienight.models.Movies;
+import com.mmm.movienight.models.Movie;
 import com.mmm.movienight.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class MovieController {
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&t=" + title;
 
         //Returning cached movie if exists
-        Movies cached = movieRepository.findByTitleIgnoreCase(title);
+        Movie cached = movieRepository.findByTitleIgnoreCase(title);
         System.out.println(cached);
         if (cached != null){
             System.out.println("Returning cached movie");
@@ -38,7 +38,7 @@ public class MovieController {
         }
 
         RestTemplate restTemplate = new RestTemplate();
-        Movies result = restTemplate.getForObject(uri, Movies.class);
+        Movie result = restTemplate.getForObject(uri, Movie.class);
 
         if(result != null) {
             movieRepository.save(result);
@@ -53,7 +53,7 @@ public class MovieController {
     public ResponseEntity getMovieSearch(@RequestParam("search") String search){
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&s=" + search;
         RestTemplate restTemplate = new RestTemplate();
-        Movies.MovieSearch result = restTemplate.getForObject(uri, Movies.MovieSearch.class);
+        Movie.MovieSearch result = restTemplate.getForObject(uri, Movie.MovieSearch.class);
 
         //TODO: Return different status codes depending on Google server response
         return new ResponseEntity(result, HttpStatus.OK);
