@@ -1,5 +1,7 @@
 package com.mmm.movienight.models;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mmm.movienight.config.Views;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,6 +14,7 @@ public class User {
     @Id
     private ObjectId id;
 
+    @JsonView(Views.Public.class)
     private String username;
     private String password;
     private UserGAPIDetails gapiDetails;
