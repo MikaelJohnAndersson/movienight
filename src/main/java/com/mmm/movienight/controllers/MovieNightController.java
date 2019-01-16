@@ -1,6 +1,7 @@
 package com.mmm.movienight.controllers;
 
 import com.mmm.movienight.models.MovieNights;
+import com.mmm.movienight.models.User;
 import com.mmm.movienight.repositories.MovieNightRepository;
 import com.mmm.movienight.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Controller
 public class MovieNightController {
@@ -27,6 +30,9 @@ public class MovieNightController {
 
         String admin = userService.getActiveUser().getUsername();
         movieNight.setAdmin(admin);
+
+        List<User> allUsers = userService.findAllAndFilterCredentials();
+        movieNight.setMembers(allUsers);
 
         movieNightRepository.save(movieNight);
 

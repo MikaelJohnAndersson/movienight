@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieNights {
 
@@ -25,7 +26,7 @@ public class MovieNights {
     @JsonProperty("times")
     private EventTime[] suggestedTimes;
     @JsonProperty("members")
-    private ArrayList<User> members;
+    private List<User> members;
     @JsonProperty("movies")
     private Movie[] suggestedMovies;
     @JsonProperty("end")
@@ -55,11 +56,11 @@ public class MovieNights {
         this.suggestedTimes = suggestedTimes;
     }
 
-    public ArrayList<User> getMembers() {
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList members) {
+    public void setMembers(List<User> members) {
         this.members = members;
     }
 
