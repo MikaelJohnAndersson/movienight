@@ -41,9 +41,15 @@ $('#movie-modal').on('show.bs.modal', function (event) {
         .done(function(data) {
             let modal = $('#movie-modal')
             modal.find('.modal-title').text(data.Title);
-            modal.find('.modal-body p').text(data.Plot);
+            modal.find('.modal-img').attr({
+                'src': data.Poster,
+                'alt': data.Title + "poster"
+            })
+            modal.find('p.plot').text(data.Plot);
+            modal.find('p.actors').text(data.Actors);
+            modal.find('p.director').text(data.Director);
+            modal.find('p.writer').text(data.Writer);
+            modal.find('p.genre').text(data.Genre);
+            modal.find('p.year').text(data.Year);
         })
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-
 })

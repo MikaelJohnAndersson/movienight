@@ -61,7 +61,7 @@
 
     <!-- MODAL FOR MOVIES -->
     <div class="modal fade" id="movie-modal" tabindex="-1" role="dialog" aria-labelledby="movie-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="movie-modal-label">Movie name</h5>
@@ -70,7 +70,27 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="plot">Handling: </p>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img src="" class="img-fluid modal-img">
+                            </div>
+                            <div class="col-lg-8">
+                                <h6>Handling</h6>
+                                <p class="plot"></p>
+                                <h6>Skådespelare</h6>
+                                <p class="actors"></p>
+                                <h6>Regissör</h6>
+                                <p class="director"></p>
+                                <h6>Författare</h6>
+                                <p class="writer"></p>
+                                <h6>Genre</h6>
+                                <p class="genre"></p>
+                                <h6>År</h6>
+                                <p class="year"></p>
+                            </div>
+                </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
