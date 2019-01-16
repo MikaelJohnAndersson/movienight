@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.calendar.model.Events;
 import com.mmm.movienight.models.UserGAPIDetails;
 import com.mmm.movienight.models.User;
 import com.mmm.movienight.services.GoogleService;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 @RestController
 public class GoogleController {
@@ -89,6 +93,8 @@ public class GoogleController {
     @PostMapping("/google/getevents")
     public ResponseEntity getEventsForUsers(@RequestBody String[] usernames) throws IOException{
 
+        ArrayList<Events> events = new ArrayList<>();
+
         for (String username : usernames) {
             User user = userService.findByUserName(username);
             //TODO: FIX CODE DUPLICATION!!!!
@@ -102,11 +108,14 @@ public class GoogleController {
                 userService.saveUser(user);
             }
             String accessToken = user.getGapiDetails().getAccesstoken();
-            System.out.println(googleService.getEvents("primary", accessToken));
+
+            Events userEvents = googleService.getEvents("primary", accessToken);
+
+            events.add(userEvents);
         }
 
         //TODO: Return different status codes depending on Google server response
-        return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
+        return new ResponseEntity(events, HttpStatus.OK);
     }
 
 }
