@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -26,14 +27,14 @@ public class UserController {
     }
 
     @PostMapping("/user/new")
-    public ResponseEntity addNewUser( @RequestParam("username") String username, @RequestParam("password") String password) {
+    public RedirectView addNewUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 
         //Generating random ObjectId and encrypting password
         User user = new User(ObjectId.get(), username, passwordEncoder.encode(password), null);
         //Save user to db
         userRepository.save(user);
 
-        return ResponseEntity.ok( HttpStatus.OK );
+        return new RedirectView("/login");
     }
 
     @JsonView(Views.Public.class)
