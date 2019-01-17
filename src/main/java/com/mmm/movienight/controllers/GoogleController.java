@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 public class GoogleController {
@@ -68,36 +69,12 @@ public class GoogleController {
     }
 
     @GetMapping("/google/getevents")
-    public ResponseEntity getEvents(@RequestParam(value = "calendarId", required = false, defaultValue = "primary") String calendarId) throws IOException{
-
-        User user = userService.getActiveUser();
-
-        //TODO: FIX CODE DUPLICATION!!!!
-        if(user.tokenIsExpired()){
-            GoogleCredential userCredentials = googleService.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
-            String newToken = userCredentials.getAccessToken();
-            Long expiresInSeconds = userCredentials.getExpiresInSeconds();
-            String expiresAt = LocalDateTime.now().plusSeconds(expiresInSeconds).toString();
-            user.getGapiDetails().setAccesstoken(newToken);
-            user.getGapiDetails().setExpiresAt(expiresAt);
-            userService.saveUser(user);
-        }
-        String accessToken = user.getGapiDetails().getAccesstoken();
-
-        System.out.println(googleService.getEvents(calendarId, accessToken));
-
-        //TODO: Return different status codes depending on Google server response
-        return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
-    }
-
-    @PostMapping("/google/getevents")
-    public ResponseEntity getEventsForUsers(@RequestBody String[] usernames) throws IOException{
+    public ResponseEntity getEventsForUsers() throws IOException{
 
         ArrayList<Events> events = new ArrayList<>();
+        List<User> authorizedUsers = userService.findAuthorizedUsers();
 
-        for (String username : usernames) {
-            User user = userService.findByUserName(username);
-            //TODO: FIX CODE DUPLICATION!!!!
+        for (User user : authorizedUsers) {
             if(user.tokenIsExpired()){
                 GoogleCredential userCredentials = googleService.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
                 String newToken = userCredentials.getAccessToken();
