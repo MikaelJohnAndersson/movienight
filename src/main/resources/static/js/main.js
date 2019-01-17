@@ -15,16 +15,18 @@ $(document).ready(function () {
             .done(function (data) {
                 console.log("sökresultat: " + data)
                 $(".searchResult.row").empty();
-                $.each(data["Search"], function (i, item) {
-                    let movieInfo = `<div class="col-md-3">
+                if(data){
+                    $.each(data["Search"], function (i, item) {
+                        let movieInfo = `<div class="col-md-3">
                                 <div class="card"> 
                                 <div class="card-header">${item.Title}</div>
                          <img src="${item.Poster}" class="card-img-top" alt="${item.Title} poster" />
                          <button class="card-footer btn btn-sm" data-toggle="modal" data-target="#movie-modal" data-movie="${item.Title}">Läs mer</button>
                         </div>
                     </div>`;
-                    $(".searchResult.row").append(movieInfo);
-                });
+                        $(".searchResult.row").append(movieInfo);
+                    });
+                }
             })
             .fail(function (error) {
                 console.log(error);
