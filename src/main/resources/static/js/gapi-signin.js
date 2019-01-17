@@ -14,11 +14,6 @@ $( document ).ready(function() {
     });
 
 
-    $('#signinButton').on('click', function() {
-        //Requesting offline access in order to use user data while user is offline
-        auth2.grantOfflineAccess().then(signInCallback);
-    });
-
     function signInCallback(authResult) {
         if (authResult['code']) {
 
@@ -48,6 +43,13 @@ $( document ).ready(function() {
             // There was an error.
         }
     }
+
+
+    $('#signinButton').on('click', function(e) {
+        e.preventDefault();
+        //Requesting offline access in order to use user data while user is offline
+        auth2.grantOfflineAccess().then(signInCallback);
+    });
 
 
 
