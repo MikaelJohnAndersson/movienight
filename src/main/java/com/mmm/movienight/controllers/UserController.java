@@ -1,5 +1,7 @@
 package com.mmm.movienight.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mmm.movienight.config.Views;
 import com.mmm.movienight.models.User;
 import com.mmm.movienight.repositories.UserRepository;
 import org.bson.types.ObjectId;
@@ -8,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -32,5 +36,14 @@ public class UserController {
         // TODO: status handling
         return ResponseEntity.ok( HttpStatus.OK );
     }
+
+    @JsonView(Views.Public.class)
+    @GetMapping("user/all")
+    public ResponseEntity getAllUsers(){
+        List<User> allUsers = userRepository.findAll();
+        return new ResponseEntity(allUsers, HttpStatus.OK);
+    }
+
+
 
 }

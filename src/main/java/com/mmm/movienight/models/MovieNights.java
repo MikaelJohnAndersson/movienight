@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MovieNights {
 
     //Inner class needs to be static for Spring to serialize
@@ -23,9 +26,9 @@ public class MovieNights {
     @JsonProperty("times")
     private EventTime[] suggestedTimes;
     @JsonProperty("members")
-    private String[] members;
+    private List<User> members;
     @JsonProperty("movies")
-    private Movies[] suggestedMovies;
+    private Movie[] suggestedMovies;
     @JsonProperty("end")
     private String endTime;
 
@@ -53,19 +56,19 @@ public class MovieNights {
         this.suggestedTimes = suggestedTimes;
     }
 
-    public String[] getMembers() {
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(String[] members) {
+    public void setMembers(List<User> members) {
         this.members = members;
     }
 
-    public Movies[] getSuggestedMovies() {
+    public Movie[] getSuggestedMovies() {
         return suggestedMovies;
     }
 
-    public void setSuggestedMovies(Movies[] suggestedMovies) {
+    public void setSuggestedMovies(Movie[] suggestedMovies) {
         this.suggestedMovies = suggestedMovies;
     }
 
