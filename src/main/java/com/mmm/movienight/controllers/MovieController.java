@@ -21,42 +21,43 @@ public class MovieController {
     private String omdbkey;
 
     @Autowired
-    public MovieController(MovieRepository movieRepository) {
+    public MovieController( MovieRepository movieRepository ) {
         this.movieRepository = movieRepository;
     }
 
     @GetMapping("/omdb/movies/{title}")
-    public ResponseEntity getMovie(@PathVariable("title") String title){
+    public ResponseEntity getMovie( @PathVariable("title") String title ) {
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&t=" + title;
 
         //Returning cached movie if exists
-        Movie cached = movieRepository.findByTitleIgnoreCase(title);
-        System.out.println(cached);
-        if (cached != null){
-            System.out.println("Returning cached movie");
-            return new ResponseEntity(cached, HttpStatus.OK);
+        Movie cached = movieRepository.findByTitleIgnoreCase( title );
+
+        if (cached != null) {
+            return new ResponseEntity( cached, HttpStatus.OK );
         }
 
         RestTemplate restTemplate = new RestTemplate();
-        Movie result = restTemplate.getForObject(uri, Movie.class);
+        Movie result = restTemplate.getForObject( uri, Movie.class );
 
-        if(result != null) {
-            movieRepository.save(result);
-            return new ResponseEntity(result, HttpStatus.OK);
+        if (result.getResponse().equals( "True" )) {
+            movieRepository.save( result );
+            return new ResponseEntity( result, HttpStatus.OK );
         }
 
-        //TODO: Return different status codes depending on Google server response
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity( HttpStatus.NO_CONTENT );
     }
 
     @GetMapping("/omdb/movies")
-    public ResponseEntity getMovieSearch(@RequestParam("search") String search){
+    public ResponseEntity getMovieSearch( @RequestParam("search") String search ) {
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&s=" + search;
         RestTemplate restTemplate = new RestTemplate();
-        Movie.MovieSearch result = restTemplate.getForObject(uri, Movie.MovieSearch.class);
+        Movie.MovieSearch result = restTemplate.getForObject( uri, Movie.MovieSearch.class );
 
-        //TODO: Return different status codes depending on Google server response
-        return new ResponseEntity(result, HttpStatus.OK);
+        if(result.getSearchResult() != null){
+            return new ResponseEntity( result, HttpStatus.OK );
+        }
+
+        return new ResponseEntity( HttpStatus.NO_CONTENT);
     }
 
 }

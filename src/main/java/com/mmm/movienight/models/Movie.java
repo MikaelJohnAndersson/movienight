@@ -11,6 +11,10 @@ public class Movie {
     public static class MovieSearch {
         @JsonProperty("Search")
         private Movie[] searchResult;
+
+        public Movie[] getSearchResult() {
+            return searchResult;
+        }
     }
 
     @Id
