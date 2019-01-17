@@ -33,7 +33,6 @@ public class UserController {
         //Save user to db
         userRepository.save(user);
 
-        // TODO: status handling
         return ResponseEntity.ok( HttpStatus.OK );
     }
 
@@ -41,7 +40,10 @@ public class UserController {
     @GetMapping("user/all")
     public ResponseEntity getAllUsers(){
         List<User> allUsers = userRepository.findAll();
-        return new ResponseEntity(allUsers, HttpStatus.OK);
+        if(!allUsers.isEmpty()){
+            return new ResponseEntity(allUsers, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 
