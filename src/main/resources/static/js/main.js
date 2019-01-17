@@ -1,56 +1,55 @@
-$( document ).ready(function() {
-
-    //OAuth2 client
-    var auth2;
-
-    //Initialize the OAuth2 client with our client credentials
-    gapi.load('auth2', function() {
-        auth2 = gapi.auth2.init({
-            //TODO: Hide client id
-            client_id: '210833549992-v1apmfej0r5na34nb3nfah0h3c99sgk4.apps.googleusercontent.com',
-            //Other than email and profile, also requesting Google Calendar scope
-            scope: 'https://www.googleapis.com/auth/calendar'
-        });
-    });
-
-
-    $('#signinButton').on('click', function() {
-        //Requesting offline access in order to use user data while user is offline
-        auth2.grantOfflineAccess().then(signInCallback);
-    });
-
-    function signInCallback(authResult) {
-        if (authResult['code']) {
-
-            // Hide the sign-in button now that the user is authorized, for example:
-            //TODO: Frontend
-            $('#signinButton').attr('style', 'display: none');
-
-            // Send the code to the server
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:8080/google/auth',
-                // Always include an `X-Requested-With` header in every AJAX request,
-                // to protect against CSRF attacks.
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                contentType: 'application/octet-stream; charset=utf-8',
-                success: function(result) {
-                    //TODO: Error handling
-                    console.log(result)
-                },
-                processData: false,
-                data: authResult['code']
-            });
-        } else {
-            //TODO: Error handling
-            // There was an error.
-        }
+var vm = new Vue({
+    el: '#nav',
+    data: {
+        user: 'username',
     }
-
-
-
 });
 
 
+
+
+$('#search').keyup(function() {
+    var s = $('#search').val();
+    $.getJSON('omdb/movies', {
+        search: s
+    })
+        .done(function( data ) {
+            $(".searchResult").empty();
+            $.each( data["Search"], function( i, item ) {
+                let movieInfo =`<div class="col-md-3">
+                                <div class="card"> 
+                                <div class="card-header">${item.Title}</div>
+                         <img src="${item.Poster}" class="card-img-top" alt="${item.Title} poster">
+                         <button class="card-footer btn btn-sm" data-toggle="modal" data-target="#movie-modal" data-movie="${item.Title}">Läs mer</button>
+                        </div>
+                    </div>`;
+                $(".searchResult").append(movieInfo);
+            });
+        })
+    .fail(function(error) {
+        console.log(error);
+    })
+});
+
+
+
+
+$('#movie-modal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget) // Button that triggered the modal
+    let movieTitle = button.data('movie') // Extract info from data-* attributes
+    $.getJSON('omdb/movies/'+ movieTitle)
+        .done(function(data) {
+            let modal = $('#movie-modal')
+            modal.find('.modal-title').text(data.Title);
+            modal.find('.modal-img').attr({
+                'src': data.Poster,
+                'alt': data.Title + "poster"
+            })
+            modal.find('p.plot').text(data.Plot);
+            modal.find('p.actors').text(data.Actors);
+            modal.find('p.director').text(data.Director);
+            modal.find('p.writer').text(data.Writer);
+            modal.find('p.genre').text(data.Genre);
+            modal.find('p.year').text(data.Year);
+        })
+})

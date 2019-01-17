@@ -28,10 +28,17 @@ public class MovieController {
     @GetMapping("/omdb/movies/{title}")
     public ResponseEntity getMovie(@PathVariable("title") String title){
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&t=" + title;
+
+        //Returning cached movie if exists
+        Movie cached = movieRepository.findByTitleIgnoreCase(title);
+        System.out.println(cached);
+        if (cached != null){
+            System.out.println("Returning cached movie");
+            return new ResponseEntity(cached, HttpStatus.OK);
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         Movie result = restTemplate.getForObject(uri, Movie.class);
-
-        System.out.println(result);
 
         if(result != null) {
             movieRepository.save(result);
@@ -46,7 +53,7 @@ public class MovieController {
     public ResponseEntity getMovieSearch(@RequestParam("search") String search){
         final String uri = "http://www.omdbapi.com/?apikey=" + omdbkey + "&s=" + search;
         RestTemplate restTemplate = new RestTemplate();
-        Movies.MovieSearch result = restTemplate.getForObject(uri, Movies.MovieSearch.class);
+        Movie.MovieSearch result = restTemplate.getForObject(uri, Movie.MovieSearch.class);
 
         //TODO: Return different status codes depending on Google server response
         return new ResponseEntity(result, HttpStatus.OK);

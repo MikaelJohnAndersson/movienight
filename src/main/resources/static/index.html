@@ -4,14 +4,106 @@
     <meta charset="UTF-8">
     <title>Movienight</title>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+    <!--styles-->
+    <link rel="stylesheet" href="/style/main.css">
+
     <!--scripts-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+
+
 </head>
 <body>
+<header id="nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="index.html">MovieNights</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-    <button id="signinButton">Sign in with Google</button>
+        <div class="collapse navbar-collapse" id="navbar-nav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Hem <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <span class="navbar-text mr-2">Inloggad som: {{ user }}</span>
+                <button id="signinButton" class="btn btn-outline-info btn-sm my-lg-0">Sign in with Google</button>
+            </form>
+        </div>
+    </nav>
+</header>
+<main>
+    <section>
+    <div class="container">
+        <div class="row">
+            <div class="input-group input-group-lg">
+                <input id="search" type="text" v-model="search" class="form-control" placeholder="Sök efter film.." aria-label="Sök efter film.." aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <section id="results">
+        <div class="container">
+            <div class="searchResult row"></div>
+        </div>
+    </section>
 
+
+    <!-- MODAL FOR MOVIES -->
+    <div class="modal fade" id="movie-modal" tabindex="-1" role="dialog" aria-labelledby="movie-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movie-modal-label">Movie name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img src="" class="img-fluid modal-img">
+                            </div>
+                            <div class="col-lg-8">
+                                <h6>Handling</h6>
+                                <p class="plot"></p>
+                                <h6>Skådespelare</h6>
+                                <p class="actors"></p>
+                                <h6>Regissör</h6>
+                                <p class="director"></p>
+                                <h6>Författare</h6>
+                                <p class="writer"></p>
+                                <h6>Genre</h6>
+                                <p class="genre"></p>
+                                <h6>År</h6>
+                                <p class="year"></p>
+                            </div>
+                </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Lägg till i filmkväll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer></footer>
+
+
+    <script src="./js/gapi-signin.js"></script>
     <script src="./js/main.js"></script>
 </body>
 </html>

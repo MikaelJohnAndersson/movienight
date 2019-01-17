@@ -1,0 +1,9 @@
+section {
+    padding: 20px 0;
+}
+
+.card-header {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
