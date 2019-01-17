@@ -17,5 +17,8 @@ public interface UserRepository extends MongoRepository<User, String> {
     @Query(value = "{}", fields="{ '_id': 1, 'username': 1}")
     List<User> findAllAndFilterCredentials();
 
+    @Query(value = "{\"gapiDetails\":{$exists:true}}")
+    List<User> findAllAuthorizedUsers();
+
     User findByUsername(String username);
 }

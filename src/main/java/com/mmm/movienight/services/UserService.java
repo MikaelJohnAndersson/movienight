@@ -34,6 +34,13 @@ public class UserService {
         return userRepository.findAllAndFilterCredentials();
     }
 
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+    public List<User> findAuthorizedUsers(){
+        return userRepository.findAllAuthorizedUsers();
+    }
+
     public void saveUser( User user ) {
         userRepository.save( user );
     }
