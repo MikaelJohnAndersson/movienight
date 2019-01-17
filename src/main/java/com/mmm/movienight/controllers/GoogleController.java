@@ -41,8 +41,7 @@ public class GoogleController {
     public ResponseEntity storeAuthCode( @RequestBody String authcode, @RequestHeader("X-Requested-With") String xRequest ) throws IOException {
 
         if (xRequest == null) {
-            //TODO: Error handling
-            // Without the `X-Requested-With` header, this request could be forged. Aborts.
+           return new ResponseEntity( HttpStatus.BAD_REQUEST );
         }
 
         //Loading client credentials
@@ -64,8 +63,10 @@ public class GoogleController {
         user.setGapiDetails( new UserGAPIDetails( accessToken, refreshToken, expiresAt ) );
         userService.saveUser( user );
 
-        //TODO: Return different status codes depending on Google server response
-        return ResponseEntity.ok( "HttpStatus:" + HttpStatus.OK );
+        if(user.getGapiDetails() != null){
+            return new ResponseEntity( HttpStatus.OK );
+        }
+        return new ResponseEntity( HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/google/getevents")
@@ -91,8 +92,10 @@ public class GoogleController {
             events.add(userEvents);
         }
 
-        //TODO: Return different status codes depending on Google server response
-        return new ResponseEntity(events, HttpStatus.OK);
+        if (!events.isEmpty()){
+            return new ResponseEntity(events, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
