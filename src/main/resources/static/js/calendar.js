@@ -9,6 +9,7 @@ $(document).ready(function () {
             loadCalendar(result)
         }
     });
+    let createMN = $('#create-movienight');
 
     function loadCalendar(googleEvents){
         $('#calendar').fullCalendar({
@@ -20,7 +21,8 @@ $(document).ready(function () {
                 right: 'month,agendaWeek,agendaDay'
             },
             dayClick: function(date, jsevent, view) {
-                alert('clicked ' + date.format());
+                //alert('clicked ' + date.format());
+                createMN.find('span.date').text(date.format());
             },
             select: function(startDate, endDate) {
                 alert('selected ' + startDate.format() + ' to ' + endDate.format());
