@@ -12,8 +12,21 @@ $(document).ready(function () {
 
     function loadCalendar(googleEvents){
         $('#calendar').fullCalendar({
-            events: googleEvents
+            events: googleEvents,
+            selectable: true,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            dayClick: function(date, jsevent, view) {
+                alert('clicked ' + date.format());
+            },
+            select: function(startDate, endDate) {
+                alert('selected ' + startDate.format() + ' to ' + endDate.format());
+            }
         });
     }
 
 });
+
