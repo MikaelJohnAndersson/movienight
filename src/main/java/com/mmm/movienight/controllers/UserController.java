@@ -26,7 +26,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/user/new")
+    @PostMapping("/user")
     public RedirectView addNewUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 
         //Generating random ObjectId and encrypting password
