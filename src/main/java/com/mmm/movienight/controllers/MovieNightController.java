@@ -36,7 +36,7 @@ public class MovieNightController {
     public ResponseEntity newMovieNight(@RequestBody MovieNight movieNight) throws IOException{
 
         if(!userService.getActiveUser().isAuthenticated()){
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity("Not authenticated with Google.", HttpStatus.UNAUTHORIZED);
         }
 
         String start = movieNight.getEvent().getStart();
@@ -72,7 +72,6 @@ public class MovieNightController {
             });
 
 
-        //TODO: Return different status codes depending on Google server response
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(movieNight, HttpStatus.OK);
     }
 }

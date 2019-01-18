@@ -74,7 +74,12 @@ $(document).ready(function () {
             url: 'http://localhost:8080/movienight',
             contentType: 'application/json',
             success: function(result) {
-                console.log(result)
+                alert("Filmkväll bokad!\nFilm: " + result.event.title + "\nMedlemmar: " + result.members.join(', ') + "\nHa så kul :)");
+            },
+            error: function (jqXHR, exception) {
+                if(jqXHR.status == 401){
+                    alert("Please authenticate with Google in order to create a movienight!")
+                }
             },
             data: JSON.stringify(movienight)
         });
