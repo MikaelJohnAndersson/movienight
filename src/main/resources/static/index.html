@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="UTF-8">
     <title>Movienight</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="./lib/fullcalendar.css">
+    <link rel="stylesheet" media="print" href="./lib/fullcalendar.print.css">
 
     <!--styles-->
     <link rel="stylesheet" href="/style/main.css">
@@ -15,22 +17,25 @@
     <!--scripts-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
-    <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+    <script src='./lib/moment.min.js'></script>
+    <script src='./lib/fullcalendar.js'></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
 
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 <header id="nav">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="index.html">MovieNights</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <a class="navbar-brand" href="index.html">MovieNights</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbar-nav">
             <ul class="navbar-nav mr-auto">
@@ -39,34 +44,43 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <span class="navbar-text mr-2">Inloggad som: {{ user }}</span>
                 <button id="signinButton" class="btn btn-outline-info btn-sm my-lg-0">Sign in with Google</button>
             </form>
         </div>
     </nav>
 </header>
 <main>
-    <section>
-    <div class="container">
-        <div class="row">
-            <div class="input-group input-group-lg">
-                <input id="search" type="text" v-model="search" class="form-control" placeholder="Sök efter film.." aria-label="Sök efter film.." aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+    <section class="movie-search">
+        <div class="container">
+            <div class="row">
+                <div class="input-group input-group-lg">
+                    <input id="search" type="text" class="form-control" placeholder="Sök efter film.."
+                           aria-label="Sök efter film.." aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+                                class="fas fa-search"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
     <section id="results">
         <div class="container">
             <div class="searchResult row"></div>
         </div>
     </section>
+    <section class="movie-cal">
+        <div class="container">
+            <div class="row">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </section>
 
 
     <!-- MODAL FOR MOVIES -->
-    <div class="modal fade" id="movie-modal" tabindex="-1" role="dialog" aria-labelledby="movie-modal-label" aria-hidden="true">
+    <div class="modal fade" id="movie-modal" tabindex="-1" role="dialog" aria-labelledby="movie-modal-label"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,7 +93,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
-                                <img src="" class="img-fluid modal-img">
+                                <img src="https://via.placeholder.com/300x446?text=No+image+available" alt="Movie poster" class="img-fluid modal-img">
                             </div>
                             <div class="col-lg-8">
                                 <h6>Handling</h6>
@@ -95,22 +109,37 @@
                                 <h6>År</h6>
                                 <p class="year"></p>
                             </div>
-                </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Lägg till i filmkväll</button>
+                    <button type="button" class="btn btn-primary btn-movie-add">Lägg till i filmkväll</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id='calendar'></div>
 </main>
-<footer></footer>
 
-    <script src="./js/calendar.js"></script>
-    <script src="./js/gapi-signin.js"></script>
-    <script src="./js/main.js"></script>
+
+<footer id="create-movienight" class="footer fixed-bottom mt-auto px-3 py-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-10">
+                <h4>Din filmkväll:</h4>
+                <div>Datum: <span class="date">N/A</span> Tid: <span class="time">N/A</span> </div>
+                <div>Film: <span class="movie">N/A</span></div>
+                <span id="end"></span>
+                <span id="start"></span>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-outline-success btn-lg btn-post-movienight">OK!</button>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="./js/gapi-signin.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/calendar.js"></script>
 </body>
 </html>

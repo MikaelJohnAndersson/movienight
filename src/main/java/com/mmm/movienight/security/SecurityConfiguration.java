@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //TODO: Research CSRF. Disable a security risk?
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/newuser","/user/new").permitAll()
+                    .antMatchers("/newuser","/user").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

@@ -39,6 +39,7 @@ public class MovieController {
         RestTemplate restTemplate = new RestTemplate();
         Movie result = restTemplate.getForObject( uri, Movie.class );
 
+        //If response is true a movie came back from OMDB. Cache in DB
         if (result.getResponse().equals( "True" )) {
             movieRepository.save( result );
             return new ResponseEntity( result, HttpStatus.OK );

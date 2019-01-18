@@ -8,35 +8,87 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.mmm.movienight.models.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class GoogleService {
 
-    private final DateTime minDate = new DateTime( new Date() );
+    private final Instant instant = Instant.now().minus(7, ChronoUnit.DAYS);
+    private final DateTime minDate = new DateTime(Date.from(instant));
 
-    public Events getEvents(String calendarId, String accessToken) {
+    @Value("${application.name}")
+    private String applicationName;
+
+    public List<Event> getEvents(String calendarId, String accessToken) {
+
+        List<Event> events = new ArrayList<>();
 
         GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
-        //TODO: Put Application name in application properties
-        Calendar calendar = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE-NIGHT" ).build();
-        Events events = null;
+        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( applicationName ).build();
+
         try {
-            events = calendar.events().list( calendarId ).setMaxResults( 50 ).setTimeMin( minDate ).setOrderBy( "startTime" ).setSingleEvents( true ).execute();
+            Events eventList = service.events().list( calendarId ).setMaxResults( 50 ).setTimeMin( minDate ).setOrderBy( "startTime" ).setSingleEvents( true ).execute();
+            events = eventList.getItems();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return events;
+    }
+
+    public void bookMovieNight(String accessToken, String start, String end, String summary){
+
+        Event event = new Event().setSummary(summary);
+
+        DateTime startTime = new DateTime(start);
+        EventDateTime eventStart = new EventDateTime().setDateTime(startTime);
+        event.setStart(eventStart);
+
+        DateTime endTime = new DateTime(end);
+        EventDateTime eventEnd = new EventDateTime().setDateTime(endTime);
+        event.setEnd(eventEnd);
+
+        GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
+        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( applicationName ).build();
+        try {
+            //Posting to primary calendar
+            String calendarId = "primary";
+            service.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public User refreshCredentials(User user){
+        try {
+                GoogleCredential userCredentials = this.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
+                String newToken = userCredentials.getAccessToken();
+                Long expiresInSeconds = userCredentials.getExpiresInSeconds();
+                String expiresAt = LocalDateTime.now().plusSeconds(expiresInSeconds).toString();
+                user.getGapiDetails().setAccesstoken(newToken);
+                user.getGapiDetails().setExpiresAt(expiresAt);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return user;
     }
 
     public GoogleCredential getRefreshedCredentials(String refreshCode) throws IOException {
