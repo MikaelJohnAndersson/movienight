@@ -10,6 +10,9 @@ $(document).ready(function () {
                 $(".searchResult.row").empty();
                 if(data){
                     $.each(data["Search"], function (i, item) {
+                        if (item.Poster === "N/A") {
+                            item.Poster = "https://via.placeholder.com/300x446?text=No+image+available"
+                        }
                         let movieInfo = `<div class="col-md-3">
                                 <div class="card"> 
                                 <div class="card-header">${item.Title}</div>
@@ -35,6 +38,9 @@ $(document).ready(function () {
             .done(function (data) {
                 let modal = $('#movie-modal')
                 modal.find('.modal-title').text(data.Title);
+                if (data.Poster === "N/A") {
+                    data.Poster = "https://via.placeholder.com/300x446?text=No+image+available"
+                }
                 modal.find('.modal-img').attr({
                     'src': data.Poster,
                     'alt': data.Title + "poster"
