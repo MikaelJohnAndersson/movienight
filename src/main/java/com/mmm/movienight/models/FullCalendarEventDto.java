@@ -6,6 +6,9 @@ public class FullCalendarEventDto {
     private String start;
     private String end;
 
+    public FullCalendarEventDto() {
+    }
+
     public FullCalendarEventDto(String title, String start, String end) {
         this.title = title;
         this.start = start;

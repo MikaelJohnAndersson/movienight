@@ -9,13 +9,13 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,16 +33,39 @@ public class GoogleService {
 
         GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
         //TODO: Put Application name in application properties
-        Calendar calendar = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE-NIGHT" ).build();
-        Events eventList = null;
+        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE-NIGHT" ).build();
         try {
-            eventList = calendar.events().list( calendarId ).setMaxResults( 50 ).setTimeMin( minDate ).setOrderBy( "startTime" ).setSingleEvents( true ).execute();
+            Events eventList = service.events().list( calendarId ).setMaxResults( 50 ).setTimeMin( minDate ).setOrderBy( "startTime" ).setSingleEvents( true ).execute();
             events = eventList.getItems();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return events;
+    }
+
+    public void bookMovieNight(String accessToken, String start, String end, String summary){
+
+        Event event = new Event().setSummary(summary);
+
+        DateTime startTime = new DateTime(start);
+        EventDateTime eventStart = new EventDateTime().setDateTime(startTime);
+        event.setStart(eventStart);
+
+        DateTime endTime = new DateTime(end);
+        EventDateTime eventEnd = new EventDateTime().setDateTime(endTime);
+        event.setEnd(eventEnd);
+
+        GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
+        //TODO: Put Application name in application properties
+        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE-NIGHT" ).build();
+        try {
+            String calendarId = "primary";
+            service.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public GoogleCredential getRefreshedCredentials(String refreshCode) throws IOException {
