@@ -37,7 +37,7 @@ public class MovieNightController {
 
         String start = movieNight.getEvent().getStart();
         String end = movieNight.getEvent().getEnd();
-        String summary = movieNight.getEvent().getTitle();
+        String title = movieNight.getEvent().getTitle();
 
         String admin = userService.getActiveUser().getUsername();
         movieNight.setAdmin(admin);
@@ -64,7 +64,7 @@ public class MovieNightController {
                     e.printStackTrace();
                 }
                 String accessToken = user.getGapiDetails().getAccesstoken();
-                googleService.bookMovieNight(accessToken, start, end, summary);
+                googleService.bookMovieNight(accessToken, start, end, title);
             });
 
 

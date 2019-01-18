@@ -17,8 +17,6 @@ public class MovieNight {
     private FullCalendarEventDto event;
     @JsonProperty("members")
     private List<String> members;
-    @JsonProperty("movies")
-    private Movie movie;
 
     public ObjectId getId() {
         return id;
@@ -50,13 +48,5 @@ public class MovieNight {
 
     public void setMembers(List<String> members) {
         this.members = members;
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
     }
 }

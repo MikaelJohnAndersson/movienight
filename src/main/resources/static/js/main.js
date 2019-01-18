@@ -33,7 +33,6 @@ $(document).ready(function () {
         let movieTitle = button.data('movie') // Extract info from data-* attributes
         $.getJSON('/omdb/movies/' + movieTitle)
             .done(function (data) {
-                console.log("modal" + data)
                 let modal = $('#movie-modal')
                 modal.find('.modal-title').text(data.Title);
                 modal.find('.modal-img').attr({
@@ -52,15 +51,34 @@ $(document).ready(function () {
         })
     })
 
-    let newMovieNight = {};
-
     $('.btn-movie-add').on('click', function(e) {
         let chosenMovie = $('.btn-movie-add').data('movie-add');
         let createMN = $('#create-movienight');
-        createMN.find('span.movies').text(chosenMovie);
-        newMovieNight.movie = chosenMovie;
-
+        createMN.find('span.movie').text(chosenMovie);
     })
 
+    //TODO: Fixa fulhack
+    $('.btn-post-movienight').on('click', function (e) {
+
+        let createMN = $('#create-movienight');
+
+        let movienight = {}
+        movienight.event = {
+            start: createMN.find('#start').text(),
+            end: createMN.find('#end').text(),
+            title: createMN.find('span.movie').text()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/movienight',
+            contentType: 'application/json',
+            success: function(result) {
+                console.log(result)
+            },
+            data: JSON.stringify(movienight)
+        });
+
+    })
 
 });

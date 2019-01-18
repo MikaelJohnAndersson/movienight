@@ -51,13 +51,6 @@
     </nav>
 </header>
 <main>
-    <section class="movie-cal">
-        <div class="container">
-            <div class="row">
-                <div id="calendar"></div>
-            </div>
-        </div>
-    </section>
     <section class="movie-search">
         <div class="container">
             <div class="row">
@@ -75,6 +68,13 @@
     <section id="results">
         <div class="container">
             <div class="searchResult row"></div>
+        </div>
+    </section>
+    <section class="movie-cal">
+        <div class="container">
+            <div class="row">
+                <div id="calendar"></div>
+            </div>
         </div>
     </section>
 
@@ -130,9 +130,11 @@
                 <h4>Din filmkväll:</h4>
                 <div>Datum: <span class="date">N/A</span> Tid: <span class="time">N/A</span> </div>
                 <div>Film: <span class="movie">N/A</span></div>
+                <span id="end"></span>
+                <span id="start"></span>
             </div>
             <div class="col-2">
-                <button class="btn btn-outline-success btn-lg" disabled>OK!</button>
+                <button class="btn btn-outline-success btn-lg btn-post-movienight">OK!</button>
             </div>
         </div>
     </div>

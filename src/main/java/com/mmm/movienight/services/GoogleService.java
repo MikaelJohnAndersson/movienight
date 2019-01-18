@@ -18,6 +18,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +27,8 @@ import java.util.List;
 @Service
 public class GoogleService {
 
-    private final DateTime minDate = new DateTime( new Date() );
+    private final Instant instant = Instant.now().minus(7, ChronoUnit.DAYS);
+    private final DateTime minDate = new DateTime(Date.from(instant));
 
     public List<Event> getEvents(String calendarId, String accessToken) {
 
