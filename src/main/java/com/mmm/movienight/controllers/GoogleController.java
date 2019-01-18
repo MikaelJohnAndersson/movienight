@@ -6,7 +6,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.calendar.model.Events;
+import com.google.api.services.calendar.model.Event;
+import com.mmm.movienight.models.FullCalendarEventDto;
 import com.mmm.movienight.models.UserGAPIDetails;
 import com.mmm.movienight.models.User;
 import com.mmm.movienight.services.GoogleService;
@@ -21,8 +22,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -72,7 +71,7 @@ public class GoogleController {
     @GetMapping("/google/getevents")
     public ResponseEntity getEventsForUsers() throws IOException{
 
-        ArrayList<Events> events = new ArrayList<>();
+        ArrayList<FullCalendarEventDto> events = new ArrayList<>();
         List<User> authorizedUsers = userService.findAuthorizedUsers();
 
         for (User user : authorizedUsers) {
@@ -87,9 +86,14 @@ public class GoogleController {
             }
             String accessToken = user.getGapiDetails().getAccesstoken();
 
-            Events userEvents = googleService.getEvents("primary", accessToken);
-
-            events.add(userEvents);
+            List<Event> userEvents = googleService.getEvents("primary", accessToken);
+            //Serializing google events to correct format for frontend (FullCalendar)
+            userEvents.forEach(event -> {
+                String start = event.getStart().getDateTime().toString();
+                String end = event.getEnd().getDateTime().toString();
+                String title = event.getSummary();
+                events.add(new FullCalendarEventDto(title, start, end));
+            });
         }
 
         if (!events.isEmpty()){
