@@ -35,6 +35,10 @@ public class MovieNightController {
     @PostMapping("/movienight")
     public ResponseEntity newMovieNight(@RequestBody MovieNight movieNight) throws IOException{
 
+        if(!userService.getActiveUser().isAuthenticated()){
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
         String start = movieNight.getEvent().getStart();
         String end = movieNight.getEvent().getEnd();
         String title = movieNight.getEvent().getTitle();
@@ -69,6 +73,6 @@ public class MovieNightController {
 
 
         //TODO: Return different status codes depending on Google server response
-        return ResponseEntity.ok("HttpStatus:" + HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

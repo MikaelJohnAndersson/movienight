@@ -32,6 +32,10 @@ public class User {
         return accessTokenExpire.isBefore(now);
     }
 
+    public boolean isAuthenticated(){
+        return this.gapiDetails != null;
+    }
+
     public ObjectId getId() {
         return id;
     }
