@@ -13,12 +13,13 @@ $(document).ready(function () {
 
     function loadCalendar(googleEvents){
         $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
             events: googleEvents,
             selectable: true,
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'agendaWeek'
             },
           /*  dayClick: function(date, jsevent, view) {
                 //alert('clicked ' + date.format());
