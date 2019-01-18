@@ -12,7 +12,6 @@ $(document).ready(function () {
     let createMN = $('#create-movienight');
 
     function loadCalendar(googleEvents){
-        console.log(googleEvents)
         $('#calendar').fullCalendar({
             events: googleEvents,
             selectable: true,

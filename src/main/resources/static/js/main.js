@@ -1,5 +1,16 @@
 $(document).ready(function () {
 
+    $.ajax({
+        type: 'Get',
+        url: 'http://localhost:8080/user/authenticated',
+        success: function(result) {
+            console.log(result);
+            if(result === true){
+                $('#signinButton').addClass("d-none")
+            }
+        }
+    });
+
     $('#search').keyup(function () {
         var s = $('#search').val();
         $.getJSON('omdb/movies', {
