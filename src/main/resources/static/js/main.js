@@ -1,14 +1,4 @@
 $(document).ready(function () {
-    var vm = new Vue({
-        el: '#nav',
-        data: {
-            user: 'username',
-        }
-    });
-
-
-
-
 
     $('#search').keyup(function () {
         var s = $('#search').val();
