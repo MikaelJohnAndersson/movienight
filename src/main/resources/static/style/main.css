@@ -6,6 +6,10 @@ footer {
     background: rgba(95, 158, 160, .7);
 }
 
+main .movie-search {
+    background: transparent url("../img/movie-search-bg.jpg") no-repeat center;
+}
+
 .card-header {
     white-space: nowrap;
     overflow: hidden;

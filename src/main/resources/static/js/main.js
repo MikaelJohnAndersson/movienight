@@ -7,6 +7,9 @@ $(document).ready(function () {
     });
 
 
+
+
+
     $('#search').keyup(function () {
         var s = $('#search').val();
         $.getJSON('omdb/movies', {
@@ -53,9 +56,20 @@ $(document).ready(function () {
                 modal.find('p.writer').text(data.Writer);
                 modal.find('p.genre').text(data.Genre);
                 modal.find('p.year').text(data.Year);
+                modal.find('button.btn-movie-add').attr('data-movie-add', data.Title);
             }).fail(function (error) {
             console.log(error);
         })
+    })
+
+    let newMovieNight = {};
+
+    $('.btn-movie-add').on('click', function(e) {
+        let chosenMovie = $('.btn-movie-add').data('movie-add');
+        let createMN = $('#create-movienight');
+        createMN.find('span.movies').text(chosenMovie);
+        newMovieNight.movie = chosenMovie;
+
     })
 
 
