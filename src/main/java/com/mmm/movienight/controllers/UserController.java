@@ -37,6 +37,7 @@ public class UserController {
         return new RedirectView("/login");
     }
 
+    //Return only usernames
     @JsonView(Views.Public.class)
     @GetMapping("user/all")
     public ResponseEntity getAllUsers(){

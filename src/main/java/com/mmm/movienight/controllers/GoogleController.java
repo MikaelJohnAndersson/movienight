@@ -76,13 +76,8 @@ public class GoogleController {
 
         for (User user : authorizedUsers) {
             if(user.tokenIsExpired()){
-                GoogleCredential userCredentials = googleService.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
-                String newToken = userCredentials.getAccessToken();
-                Long expiresInSeconds = userCredentials.getExpiresInSeconds();
-                String expiresAt = LocalDateTime.now().plusSeconds(expiresInSeconds).toString();
-                user.getGapiDetails().setAccesstoken(newToken);
-                user.getGapiDetails().setExpiresAt(expiresAt);
-                userService.saveUser(user);
+                //Refreshing credentials and saving updated credentials to db
+                userService.saveUser(googleService.refreshCredentials(user));
             }
             String accessToken = user.getGapiDetails().getAccesstoken();
 

@@ -13,12 +13,15 @@ import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.mmm.movienight.models.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,13 +33,16 @@ public class GoogleService {
     private final Instant instant = Instant.now().minus(7, ChronoUnit.DAYS);
     private final DateTime minDate = new DateTime(Date.from(instant));
 
+    @Value("${application.name}")
+    private String applicationName;
+
     public List<Event> getEvents(String calendarId, String accessToken) {
 
         List<Event> events = new ArrayList<>();
 
         GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
-        //TODO: Put Application name in application properties
-        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE-NIGHT" ).build();
+        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( applicationName ).build();
+
         try {
             Events eventList = service.events().list( calendarId ).setMaxResults( 50 ).setTimeMin( minDate ).setOrderBy( "startTime" ).setSingleEvents( true ).execute();
             events = eventList.getItems();
@@ -60,15 +66,29 @@ public class GoogleService {
         event.setEnd(eventEnd);
 
         GoogleCredential credential = new GoogleCredential().setAccessToken( accessToken );
-        //TODO: Put Application name in application properties
-        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( "MOVIE-NIGHT" ).build();
+        Calendar service = new Calendar.Builder( new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential ).setApplicationName( applicationName ).build();
         try {
+            //Posting to primary calendar
             String calendarId = "primary";
             service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public User refreshCredentials(User user){
+        try {
+                GoogleCredential userCredentials = this.getRefreshedCredentials(user.getGapiDetails().getRefreshtoken());
+                String newToken = userCredentials.getAccessToken();
+                Long expiresInSeconds = userCredentials.getExpiresInSeconds();
+                String expiresAt = LocalDateTime.now().plusSeconds(expiresInSeconds).toString();
+                user.getGapiDetails().setAccesstoken(newToken);
+                user.getGapiDetails().setExpiresAt(expiresAt);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return user;
     }
 
     public GoogleCredential getRefreshedCredentials(String refreshCode) throws IOException {
