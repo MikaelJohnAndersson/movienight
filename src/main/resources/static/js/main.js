@@ -4,7 +4,6 @@ $(document).ready(function () {
         type: 'Get',
         url: 'http://localhost:8080/user/authenticated',
         success: function(result) {
-            console.log(result);
             if(result === true){
                 $('#signinButton').addClass("d-none")
             }
@@ -17,7 +16,6 @@ $(document).ready(function () {
             search: s
         })
             .done(function (data) {
-                console.log("sökresultat: " + data)
                 $(".searchResult.row").empty();
                 if(data){
                     $.each(data["Search"], function (i, item) {
@@ -42,7 +40,6 @@ $(document).ready(function () {
 
 
     $('#movie-modal').on('show.bs.modal', function (event) {
-        console.log("opening modal")
         let button = $(event.relatedTarget) // Button that triggered the modal
         let movieTitle = button.data('movie') // Extract info from data-* attributes
         $.getJSON('/omdb/movies/' + movieTitle)
@@ -96,6 +93,9 @@ $(document).ready(function () {
             error: function (jqXHR, exception) {
                 if(jqXHR.status == 401){
                     alert("Please authenticate with Google in order to create a movienight!")
+                }
+                if(jqXHR.status == 500){
+                    alert("Någonting gick fel. Vänligen säkerställ att alla fält är ifyllda.")
                 }
             },
             data: JSON.stringify(movienight)
